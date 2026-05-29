@@ -11,7 +11,7 @@ function validarEmail(email) {
 }
 
 function validarTelefono(telefono) {
-    // Solo números, símbolos de teléfono, mínimo 8 caracteres
+    // Solo números, símbolos de teléfono mínimo 8 caracteres
     const regex = /^[\d\+\-\s()]{8,}$/;
     return regex.test(telefono.trim());
 }
@@ -43,7 +43,6 @@ function limpiarError(inputId, mensajeId) {
 
 // Generar CSV
 function generarCSV(datos) {
-    // Encabezados
     let csv = 'Nombre,Email,Teléfono,Asunto,Fecha\n';
     
     // Datos
@@ -74,21 +73,16 @@ function descargarCSV(contenido, nombreArchivo) {
     document.body.removeChild(link);
 }
 
-// Guardar datos en localStorage
 function guardarEnLocal(datos) {
-    // Obtener datos existentes
     let registros = JSON.parse(localStorage.getItem('formularioRegistros')) || [];
     
-    // Agregar nuevo registro
     registros.push(datos);
     
-    // Guardar
     localStorage.setItem('formularioRegistros', JSON.stringify(registros));
     
     return registros;
 }
 
-// Manejar envío del formulario
 document.addEventListener('DOMContentLoaded', function() {
     const formulario = document.getElementById('miFormulario');
     
@@ -96,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
         formulario.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Obtener valores
             const nombre = document.getElementById('nombre').value;
             const email = document.getElementById('email').value;
             const telefono = document.getElementById('telefono').value;
@@ -136,7 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 limpiarError('asunto', 'errorAsunto');
             }
             
-            // Si todo es válido
             if (formularioValido) {
                 const datos = {
                     nombre: nombre,
@@ -146,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     fecha: new Date().toLocaleString('es-CL')
                 };
                 
-                // Guardar en localStorage
+                // Guardar en local
                 guardarEnLocal(datos);
                 
                 // Generar y descargar CSV
